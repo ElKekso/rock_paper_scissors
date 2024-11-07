@@ -9,7 +9,7 @@ function getRandomInt()
 function getComputerChoice()
 {
     let rnd = getRandomInt();
-    return rnd == 0 ? "rock" : num == 1 ? "paper" : "scissors"
+    return rnd == 0 ? "rock" : rnd == 1 ? "paper" : "scissors"
 }
 
 function testGetComputerChoice()
@@ -55,7 +55,7 @@ function playRound(humanChoice, computerChoice)
 {
     switch(getWinner(humanChoice, computerChoice))
     {
-        case 0: console.log("You used the same strategy. Nobody gets a point!");
+        case 0: console.log("You used the same strategy. Nobody gets a point!"); break;
 
         case 1: console.log("You win! " + humanChoice + " beats " + computerChoice + "."); humanScore++; break;
 
@@ -64,7 +64,7 @@ function playRound(humanChoice, computerChoice)
 }
 
 function playGame(){
-    for( let i = 0; i < 5; i++)
+    for(let i = 0; i < 5; i++)
     {
         playRound(getHumanChoice(), getComputerChoice());
     }
