@@ -1,17 +1,15 @@
+let humanScore = 0;
+let computerScore = 0;
+
 function getRandomInt()
 {
     return Math.floor(Math.random() * 3);
 }
 
-function getRPC(num)
-{
-    return num == 0 ? "rock" : num == 1 ? "paper" : "scissor"
-}
-
 function getComputerChoice()
 {
     let rnd = getRandomInt();
-    return getRPC(num);
+    return rnd == 0 ? "rock" : num == 1 ? "paper" : "scissors"
 }
 
 function testGetComputerChoice()
@@ -23,17 +21,58 @@ function getHumanChoice()
 {
     let choice;
     while(true){
-        choice = prompt("Choose rock (0), paper (1) or scissors (2)!");
-        if(choice == 0 || choice == 1 || choice == 2)
+        choice = prompt("Choose rock, paper or scissors!");
+        choice = choice.toLocaleLowerCase();
+        if(choice == "rock" || choice == "paper" || choice == "scissors")
         {
             break;
         }
     }
 
-    return getRPC(choice);
+    return choice;
 }
 
 function testGetHumanChoice()
 {
     console.log(getHumanChoice());
+}
+
+
+
+function getWinner(humanChoice, computerChoice)
+{
+    if(humanChoice == computerChoice)
+        return 0;
+    if((humanChoice == "rock" && computerChoice == "scissors") 
+        || (humanChoice == "paper" && computerChoice == "rock") 
+        || (humanChoice == "scissors" && computerChoice == "paper"))
+        return 1;
+    else
+        return 2;
+}
+
+function playRound(humanChoice, computerChoice)
+{
+    switch(getWinner(humanChoice, computerChoice))
+    {
+        case 0: console.log("You used the same strategy. Nobody gets a point!");
+
+        case 1: console.log("You win! " + humanChoice + " beats " + computerChoice + "."); humanScore++; break;
+
+        case 2: console.log("You lose! " + computerChoice + " beats " + humanChoice + "."); computerScore++; break;
+    }
+}
+
+function playGame(){
+    for( let i = 0; i < 5; i++)
+    {
+        playRound(getHumanChoice(), getComputerChoice());
+    }
+
+    if(humanScore > computerScore)
+        console.log("You won!!!");
+    else if (humanScore < computerScore)
+        console.log("You lost! womp womp");
+    else
+        console.log("Everyone loses (as always)"); 
 }
