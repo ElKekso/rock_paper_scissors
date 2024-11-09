@@ -64,10 +64,10 @@ function playRound(humanChoice, computerChoice)
 }
 
 function playGame(){
-    for(let i = 0; i < 5; i++)
-    {
+    //for(let i = 0; i < 5; i++)
+    //{
         playRound(getHumanChoice(), getComputerChoice());
-    }
+    //}
 
     if(humanScore > computerScore)
         console.log("You won!!!");
@@ -76,3 +76,20 @@ function playGame(){
     else
         console.log("Everyone loses (as always)"); 
 }
+
+const btn_container = querySelector("#btn_container");
+
+btn_container.addEventListener("click", function (e) 
+{
+    const target = e.target;
+    const choice = '';
+
+    switch(target.id)
+    {
+        case 'rock': choice = "rock"; break;
+        case 'paper': choice = "paper"; break;
+        case 'scissors' : choice = "scissors"; break;
+    }
+
+    playRound(choice, getComputerChoice());
+});
