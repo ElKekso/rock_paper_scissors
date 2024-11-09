@@ -1,6 +1,8 @@
 let humanScore = 0;
 let computerScore = 0;
 
+const results = document.querySelector("#results");
+
 function getRandomInt()
 {
     return Math.floor(Math.random() * 3);
@@ -55,11 +57,11 @@ function playRound(humanChoice, computerChoice)
 {
     switch(getWinner(humanChoice, computerChoice))
     {
-        case 0: console.log("You used the same strategy. Nobody gets a point!"); break;
+        case 0: results.textContent = "You used the same strategy. Nobody gets a point!"; break;
 
-        case 1: console.log("You win! " + humanChoice + " beats " + computerChoice + "."); humanScore++; break;
+        case 1: results.textContent = "You win! " + humanChoice + " beats " + computerChoice + "."; humanScore++; break;
 
-        case 2: console.log("You lose! " + computerChoice + " beats " + humanChoice + "."); computerScore++; break;
+        case 2: results.textContent = "You lose! " + computerChoice + " beats " + humanChoice + "."; computerScore++; break;
     }
 }
 
@@ -70,11 +72,11 @@ function playGame(){
     //}
 
     if(humanScore > computerScore)
-        console.log("You won!!!");
+        results.textContent = "You won!!!";
     else if (humanScore < computerScore)
-        console.log("You lost! womp womp");
+        results.textContent = "You lost! womp womp";
     else
-        console.log("Everyone loses (as always)"); 
+        results.textContent = "Everyone loses (as always)"; 
 }
 
 const btn_container = querySelector("#btn_container");
