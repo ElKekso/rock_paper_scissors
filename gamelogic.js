@@ -1,7 +1,13 @@
 let humanScore = 0;
+const huSc = document.createElement("p");
 let computerScore = 0;
+const coSc = document.createElement("p");
 
 const results = document.querySelector("#results");
+const score = document.querySelector("#score");
+score.appendChild(huSc);
+score.appendChild(coSc);
+
 
 function getRandomInt()
 {
@@ -63,14 +69,12 @@ function playRound(humanChoice, computerChoice)
 
         case 2: results.textContent = "You lose! " + computerChoice + " beats " + humanChoice + "."; computerScore++; break;
     }
+
+    let scoreChange = new CustomEvent('scoreChange');
+    dispatchEvent(scoreChange);
 }
 
-function playGame(){
-    //for(let i = 0; i < 5; i++)
-    //{
-        playRound(getHumanChoice(), getComputerChoice());
-    //}
-
+function showResults(){
     if(humanScore > computerScore)
         results.textContent = "You won!!!";
     else if (humanScore < computerScore)
@@ -94,4 +98,13 @@ btn_container.addEventListener("click", function (e)
     }
 
     playRound(choice, getComputerChoice());
+});
+
+document.addEventListener("scoreChange", function () 
+{
+    huSc.textContent("Human Score: " + humanScore);
+    coSc.textContent("Computer Score: " + computerScore);
+
+    if(humanScore === 5 || computerScore === 5)
+        showResults();
 });
