@@ -3,11 +3,14 @@ const huSc = document.createElement("p");
 let computerScore = 0;
 const coSc = document.createElement("p");
 
+const body = document.querySelector("body");
+const reset = document.querySelector("#reset")
 const results = document.querySelector("#results");
 const score = document.querySelector("#score");
 score.appendChild(huSc);
 score.appendChild(coSc);
 
+let scoreChange = new CustomEvent('scoreChange', {bubbles: true});
 
 function getRandomInt()
 {
@@ -70,8 +73,8 @@ function playRound(humanChoice, computerChoice)
         case 2: results.textContent = "You lose! " + computerChoice + " beats " + humanChoice + "."; computerScore++; break;
     }
 
-    let scoreChange = new CustomEvent('scoreChange');
-    dispatchEvent(scoreChange);
+    
+    results.dispatchEvent(scoreChange);
 }
 
 function showResults(){
@@ -83,28 +86,39 @@ function showResults(){
         results.textContent = "Everyone loses (as always)"; 
 }
 
-const btn_container = querySelector("#btn_container");
+const btn_container = document.querySelector("#btn_container");
 
 btn_container.addEventListener("click", function (e) 
 {
     const target = e.target;
-    const choice = '';
+    let choice = '';
 
     switch(target.id)
     {
         case 'rock': choice = "rock"; break;
         case 'paper': choice = "paper"; break;
         case 'scissors' : choice = "scissors"; break;
+
+        case 'reset' : return;
     }
 
     playRound(choice, getComputerChoice());
 });
 
-document.addEventListener("scoreChange", function () 
+body.addEventListener("scoreChange", function () 
 {
-    huSc.textContent("Human Score: " + humanScore);
-    coSc.textContent("Computer Score: " + computerScore);
+    huSc.textContent = "Human Score: " + humanScore;
+    coSc.textContent = "Computer Score: " + computerScore;
 
     if(humanScore === 5 || computerScore === 5)
         showResults();
 });
+
+reset.addEventListener('click', function ()
+{
+    humanScore = 0;
+    computerScore = 0;
+
+    results.textContent = '';
+    reset.dispatchEvent(scoreChange, { bubbles: true, cancelable: false});
+})
